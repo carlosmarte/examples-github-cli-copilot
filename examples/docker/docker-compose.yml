@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  copilot-cli:
+    image: ghcr.io/github/copilot-cli:latest
+    command: ["--headless", "--port", "4321"]
+    environment:
+      - COPILOT_GITHUB_TOKEN=${COPILOT_GITHUB_TOKEN}
+    ports:
+      - "4321:4321"
+    restart: always
+    volumes:
+      - session-data:/root/.copilot/session-state
+
+  api:
+    build: .
+    environment:
+      - CLI_URL=copilot-cli:4321
+    depends_on:
+      - copilot-cli
+    ports:
+      - "3000:3000"
+
+volumes:
+  session-data:

@@ -5,12 +5,23 @@
   "type": "module",
   "description": "Runnable examples of @github/copilot-sdk usage patterns.",
   "scripts": {
-    "ex:hello": "node examples/01-hello-world.mjs",
-    "ex:multi-turn": "node examples/02-multi-turn-conversation.mjs",
-    "ex:streaming": "node examples/03-streaming-deltas.mjs",
-    "ex:explain": "node examples/04-explain-code-file.mjs",
-    "ex:commit-msg": "node examples/05-commit-message-from-diff.mjs",
-    "ex:graceful": "node examples/06-graceful-shutdown.mjs"
+    "ex:hello": "node examples/simple-sdk/01-hello-world.mjs",
+    "ex:multi-turn": "node examples/simple-sdk/02-multi-turn-conversation.mjs",
+    "ex:streaming": "node examples/simple-sdk/03-streaming-deltas.mjs",
+    "ex:explain": "node examples/simple-sdk/04-explain-code-file.mjs",
+    "ex:commit-msg": "node examples/simple-sdk/05-commit-message-from-diff.mjs",
+    "ex:graceful": "node examples/simple-sdk/06-graceful-shutdown.mjs",
+    "ex:proxy": "node examples/simple-sdk/07-https-proxy.mjs",
+    "ex:proxy-encode": "node examples/simple-sdk/08-url-encoded-credentials.mjs",
+    "ex:proxy-preflight": "node examples/simple-sdk/09-proxy-preflight.mjs",
+    "ex:proxy-required": "node examples/simple-sdk/10-fail-fast-no-proxy-creds.mjs",
+    "ex:proxy-keychain": "node examples/simple-sdk/11-keychain-proxy-creds.mjs",
+    "dk:store-token": "node examples/docker/tests/01-keychain-store-token.mjs",
+    "dk:load-token": "node examples/docker/tests/02-keychain-load-token.mjs",
+    "dk:up": "node examples/docker/tests/03-compose-up-with-keychain.mjs",
+    "dk:cli-reachable": "node examples/docker/tests/04-cli-port-reachable.mjs",
+    "dk:e2e": "node examples/docker/tests/05-api-end-to-end.mjs",
+    "dk:down": "node examples/docker/tests/06-compose-down.mjs"
   },
   "dependencies": {
     "@github/copilot-sdk": "*"
