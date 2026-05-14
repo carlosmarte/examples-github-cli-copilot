@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>GracefulShutdown</AssemblyName>
+  </PropertyGroup>
+</Project>

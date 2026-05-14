@@ -1,0 +1,13 @@
+[package]
+name = "copilot-sdk-rust-examples"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.94"
+description = "Rust ports of the simple-sdk Copilot examples (siblings in ../nodejs/simple-sdk, ../java, ../python, ../go)."
+publish = false
+
+[dependencies]
+github-copilot-sdk = "1.0.0-beta.4"
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+serde_json = "1"
