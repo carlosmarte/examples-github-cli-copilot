@@ -1,0 +1,59 @@
+// Few-shot — Go driver for the `copilot` CLI.
+//
+// The Copilot CLI does not accept inline `--agents '<json>'`; instead, an
+// `@<path>` token inside the prompt is replaced at launch by the contents
+// of that file. We inject `prompts/cleaner.md` (Input → Output examples) and
+// append the user snippet beneath it. Pattern reference: CLI.md §3.
+//
+// Run from this directory so the relative `@./prompts/cleaner.md` resolves:
+//   go run main.go
+//   go run main.go "try { fs.readFile(p); } catch(e) { console.log(e); }"
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+)
+
+func main() {
+	exe, err := os.Executable()
+	if err == nil {
+		// `go run` writes a temp binary; fall back to the source dir via the
+		// invocation cwd when that happens.
+		if dir := filepath.Dir(exe); !strings.Contains(dir, "go-build") {
+			_ = os.Chdir(dir)
+		}
+	}
+
+	snippet := "try { db.connect(); } catch(e) { console.log(e); }"
+	if len(os.Args) > 1 {
+		snippet = os.Args[1]
+	}
+
+	prompt := strings.Join([]string{
+		"@./prompts/cleaner.md",
+		"",
+		"Snippet to rewrite:",
+		snippet,
+	}, "\n")
+
+	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err = cmd.Run()
+	if err == nil {
+		return
+	}
+
+	var exitErr *exec.ExitError
+	if errors.As(err, &exitErr) {
+		os.Exit(exitErr.ExitCode())
+	}
+	fmt.Fprintln(os.Stderr, "failed to run copilot:", err)
+	os.Exit(127)
+}
