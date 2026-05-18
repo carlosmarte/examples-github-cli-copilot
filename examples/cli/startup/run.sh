@@ -16,6 +16,10 @@
 #   ./run.sh "Describe HTTP PATCH"
 set -euo pipefail
 
+# Disable any user-configured MCP servers so this example runs against the
+# bare SDK/CLI surface only.
+export COPILOT_DISABLE_MCP=1
+
 cd "$(dirname "$0")"
 
 USER_PROMPT="${1:-Describe the HTTP DELETE method.}"
@@ -24,4 +28,4 @@ PROMPT="@./instructions.md
 
 $USER_PROMPT"
 
-copilot -p "$PROMPT" --allow-all-tools
+copilot -p "$PROMPT" --allow-all-tools --disable-builtin-mcps

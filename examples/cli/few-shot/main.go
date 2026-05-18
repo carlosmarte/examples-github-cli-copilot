@@ -20,6 +20,10 @@ import (
 )
 
 func main() {
+	// Disable any user-configured MCP servers so this example runs against
+	// the bare SDK/CLI surface only.
+	os.Setenv("COPILOT_DISABLE_MCP", "1")
+
 	exe, err := os.Executable()
 	if err == nil {
 		// `go run` writes a temp binary; fall back to the source dir via the
@@ -41,7 +45,7 @@ func main() {
 		snippet,
 	}, "\n")
 
-	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools")
+	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools", "--disable-builtin-mcps")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

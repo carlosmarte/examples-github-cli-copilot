@@ -19,12 +19,16 @@ import (
 )
 
 func main() {
+	// Disable any user-configured MCP servers so this example runs against
+	// the bare SDK/CLI surface only.
+	os.Setenv("COPILOT_DISABLE_MCP", "1")
+
 	prompt := "What is 2 + 2? Reply with only the digit."
 	if len(os.Args) > 1 {
 		prompt = os.Args[1]
 	}
 
-	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools")
+	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools", "--disable-builtin-mcps")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

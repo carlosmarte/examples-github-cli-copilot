@@ -32,6 +32,10 @@ async fn run(client: &Client) -> Result<(), Box<dyn std::error::Error>> {
 
 #[tokio::main]
 async fn main() {
+    // Disable any user-configured MCP servers so this example runs against
+    // the bare SDK surface only.
+    unsafe { std::env::set_var("COPILOT_DISABLE_MCP", "1"); }
+
     let client = match Client::start(ClientOptions::default()).await {
         Ok(c) => c,
         Err(e) => {

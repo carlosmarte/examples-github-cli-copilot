@@ -12,12 +12,17 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"sync/atomic"
 
 	copilot "github.com/github/copilot-sdk/go"
 )
 
 func main() {
+	// Disable any user-configured MCP servers so this example runs against
+	// the bare SDK surface only.
+	os.Setenv("COPILOT_DISABLE_MCP", "1")
+
 	turns := []string{
 		"Give me a one-line description of the Fibonacci sequence.",
 		"Now write a Go function that returns the nth Fibonacci number.",

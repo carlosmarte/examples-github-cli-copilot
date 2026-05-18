@@ -34,8 +34,11 @@ fn main() {
         "@./prompts/cleaner.md\n\nSnippet to rewrite:\n{snippet}",
     );
 
+    // `COPILOT_DISABLE_MCP=1` plus `--disable-builtin-mcps` keep this example
+    // on the bare SDK/CLI surface — no user-configured or bundled MCP servers.
     let status = match Command::new("copilot")
-        .args(["-p", &prompt, "--allow-all-tools"])
+        .env("COPILOT_DISABLE_MCP", "1")
+        .args(["-p", &prompt, "--allow-all-tools", "--disable-builtin-mcps"])
         .status()
     {
         Ok(s) => s,

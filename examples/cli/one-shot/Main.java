@@ -16,7 +16,12 @@ public class Main {
             ? args[0]
             : "What is 2 + 2? Reply with only the digit.";
 
-        ProcessBuilder pb = new ProcessBuilder("copilot", "-p", prompt, "--allow-all-tools");
+        ProcessBuilder pb = new ProcessBuilder(
+            "copilot", "-p", prompt, "--allow-all-tools", "--disable-builtin-mcps"
+        );
+        // Disable any user-configured MCP servers so this example runs against
+        // the bare SDK/CLI surface only.
+        pb.environment().put("COPILOT_DISABLE_MCP", "1");
         pb.inheritIO();
 
         try {

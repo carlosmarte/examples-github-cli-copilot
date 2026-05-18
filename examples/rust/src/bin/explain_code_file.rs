@@ -12,6 +12,10 @@ use std::path::PathBuf;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Disable any user-configured MCP servers so this example runs against
+    // the bare SDK surface only.
+    unsafe { env::set_var("COPILOT_DISABLE_MCP", "1"); }
+
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 || args[1].is_empty() {
         eprintln!("usage: cargo run --bin explain_code_file -- <file>");

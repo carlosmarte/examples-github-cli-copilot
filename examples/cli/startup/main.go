@@ -26,6 +26,10 @@ import (
 )
 
 func main() {
+	// Disable any user-configured MCP servers so this example runs against
+	// the bare SDK/CLI surface only.
+	os.Setenv("COPILOT_DISABLE_MCP", "1")
+
 	if exe, err := os.Executable(); err == nil {
 		if dir := filepath.Dir(exe); !strings.Contains(dir, "go-build") {
 			_ = os.Chdir(dir)
@@ -39,7 +43,7 @@ func main() {
 
 	prompt := "@./instructions.md\n\n" + userPrompt
 
-	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools")
+	cmd := exec.Command("copilot", "-p", prompt, "--allow-all-tools", "--disable-builtin-mcps")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

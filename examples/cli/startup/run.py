@@ -24,6 +24,10 @@ import shutil
 import subprocess
 import sys
 
+# Disable any user-configured MCP servers so this example runs against the
+# bare SDK/CLI surface only.
+os.environ["COPILOT_DISABLE_MCP"] = "1"
+
 
 DEFAULT_PROMPT = "Describe the HTTP DELETE method."
 
@@ -42,6 +46,7 @@ def main() -> int:
         "copilot",
         "-p", prompt,
         "--allow-all-tools",
+        "--disable-builtin-mcps",
     ]).returncode
 
 

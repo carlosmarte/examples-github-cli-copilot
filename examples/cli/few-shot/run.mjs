@@ -14,6 +14,10 @@ import { spawn } from "node:child_process";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK/CLI surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 process.chdir(dirname(fileURLToPath(import.meta.url)));
 
 const snippet = process.argv[2] ?? "try { db.connect(); } catch(e) { console.log(e); }";
@@ -27,7 +31,7 @@ const prompt = [
 
 const child = spawn(
   "copilot",
-  ["-p", prompt, "--allow-all-tools"],
+  ["-p", prompt, "--allow-all-tools", "--disable-builtin-mcps"],
   { stdio: "inherit" },
 );
 

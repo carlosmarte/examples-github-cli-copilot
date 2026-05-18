@@ -8,6 +8,10 @@
 
 using GitHub.Copilot.SDK;
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+Environment.SetEnvironmentVariable("COPILOT_DISABLE_MCP", "1");
+
 await using var client = new CopilotClient();
 await client.StartAsync();
 

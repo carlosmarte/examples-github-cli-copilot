@@ -2,8 +2,14 @@
 //
 // Read a file from disk and ask Copilot for a plain-English explanation.
 //
-// Run: mvn -q exec:java -Dexec.mainClass=examples.copilot.ExplainCodeFile \
+// Run: COPILOT_DISABLE_MCP=1 mvn -q exec:java -Dexec.mainClass=examples.copilot.ExplainCodeFile \
 //        -Dexec.args="src/main/java/examples/copilot/HelloWorld.java"
+//
+// COPILOT_DISABLE_MCP=1 keeps this example on the bare SDK surface — no
+// user-configured MCP servers loaded by the underlying CLI subprocess. The
+// JVM cannot mutate its own environment, so the variable must be exported in
+// the parent shell. The setProperty mirror below is for any SDK code that
+// also consults JVM system properties.
 package examples.copilot;
 
 import com.github.copilot.sdk.CopilotClient;
@@ -18,6 +24,7 @@ import java.nio.file.Path;
 
 public final class ExplainCodeFile {
   public static void main(String[] args) throws Exception {
+    System.setProperty("copilot.disable.mcp", "1");
     if (args.length < 1 || args[0].isBlank()) {
       System.err.println("usage: ExplainCodeFile <file>");
       System.exit(1);

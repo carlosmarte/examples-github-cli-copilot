@@ -13,11 +13,15 @@
 
 import { spawn } from "node:child_process";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK/CLI surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 const prompt = process.argv[2] ?? "What is 2 + 2? Reply with only the digit.";
 
 const child = spawn(
   "copilot",
-  ["-p", prompt, "--allow-all-tools"],
+  ["-p", prompt, "--allow-all-tools", "--disable-builtin-mcps"],
   { stdio: "inherit" },
 );
 

@@ -8,6 +8,10 @@
 import http from "node:http";
 import net from "node:net";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK/CLI surface only. (Also set in docker-compose for completeness.)
+process.env.COPILOT_DISABLE_MCP = "1";
+
 const CLI_URL = process.env.CLI_URL ?? "copilot-cli:4321";
 const [cliHost, cliPortStr] = CLI_URL.split(":");
 const cliPort = Number(cliPortStr) || 4321;

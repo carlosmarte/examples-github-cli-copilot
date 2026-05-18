@@ -15,6 +15,10 @@
 #   ./run.sh "try { fs.readFile(p); } catch(e) { console.log(e); }"
 set -euo pipefail
 
+# Disable any user-configured MCP servers so this example runs against the
+# bare SDK/CLI surface only.
+export COPILOT_DISABLE_MCP=1
+
 cd "$(dirname "$0")"
 
 SNIPPET="${1:-try { db.connect(); } catch(e) { console.log(e); }}"
@@ -24,4 +28,4 @@ PROMPT="@./prompts/cleaner.md
 Snippet to rewrite:
 $SNIPPET"
 
-copilot -p "$PROMPT" --allow-all-tools
+copilot -p "$PROMPT" --allow-all-tools --disable-builtin-mcps

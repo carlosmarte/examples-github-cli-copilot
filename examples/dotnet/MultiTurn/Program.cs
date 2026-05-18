@@ -7,6 +7,10 @@
 
 using GitHub.Copilot.SDK;
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+Environment.SetEnvironmentVariable("COPILOT_DISABLE_MCP", "1");
+
 string[] turns =
 {
     "Give me a one-line description of the Fibonacci sequence.",

@@ -7,7 +7,13 @@
 //   2. exception:  catch calls shutdown(1)
 //   3. signal:     Runtime shutdown hook calls shutdown(130)
 //
-// Run: mvn -q exec:java -Dexec.mainClass=examples.copilot.GracefulShutdown
+// Run: COPILOT_DISABLE_MCP=1 mvn -q exec:java -Dexec.mainClass=examples.copilot.GracefulShutdown
+//
+// COPILOT_DISABLE_MCP=1 keeps this example on the bare SDK surface — no
+// user-configured MCP servers loaded by the underlying CLI subprocess. The
+// JVM cannot mutate its own environment, so the variable must be exported in
+// the parent shell. The setProperty mirror below is for any SDK code that
+// also consults JVM system properties.
 package examples.copilot;
 
 import com.github.copilot.sdk.CopilotClient;
@@ -21,6 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class GracefulShutdown {
   public static void main(String[] args) {
+    System.setProperty("copilot.disable.mcp", "1");
     CopilotClient client = new CopilotClient();
     AtomicBoolean stopped = new AtomicBoolean(false);
 

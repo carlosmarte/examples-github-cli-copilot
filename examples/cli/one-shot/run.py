@@ -15,9 +15,14 @@ Run:
 
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import sys
+
+# Disable any user-configured MCP servers so this example runs against the
+# bare SDK/CLI surface only.
+os.environ["COPILOT_DISABLE_MCP"] = "1"
 
 
 def main() -> int:
@@ -26,7 +31,9 @@ def main() -> int:
         return 127
 
     prompt = sys.argv[1] if len(sys.argv) > 1 else "What is 2 + 2? Reply with only the digit."
-    return subprocess.run(["copilot", "-p", prompt, "--allow-all-tools"]).returncode
+    return subprocess.run(
+        ["copilot", "-p", prompt, "--allow-all-tools", "--disable-builtin-mcps"]
+    ).returncode
 
 
 if __name__ == "__main__":

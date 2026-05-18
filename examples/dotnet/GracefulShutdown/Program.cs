@@ -12,6 +12,10 @@
 using System.Runtime.InteropServices;
 using GitHub.Copilot.SDK;
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+Environment.SetEnvironmentVariable("COPILOT_DISABLE_MCP", "1");
+
 var client = new CopilotClient();
 var stopped = 0;
 

@@ -18,6 +18,10 @@ import (
 )
 
 func main() {
+	// Disable any user-configured MCP servers so this example runs against
+	// the bare SDK surface only.
+	os.Setenv("COPILOT_DISABLE_MCP", "1")
+
 	out, err := exec.Command("git", "diff", "--cached").Output()
 	if err != nil {
 		log.Fatalf("git diff --cached: %v", err)

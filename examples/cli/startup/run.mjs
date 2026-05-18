@@ -16,6 +16,10 @@ import { spawn } from "node:child_process";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK/CLI surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 process.chdir(dirname(fileURLToPath(import.meta.url)));
 
 const userPrompt = process.argv[2] ?? "Describe the HTTP DELETE method.";
@@ -24,7 +28,7 @@ const prompt = `@./instructions.md\n\n${userPrompt}`;
 
 const child = spawn(
   "copilot",
-  ["-p", prompt, "--allow-all-tools"],
+  ["-p", prompt, "--allow-all-tools", "--disable-builtin-mcps"],
   { stdio: "inherit" },
 );
 

@@ -14,8 +14,13 @@
 #   ./run.sh "Summarize the last 5 git commits as a markdown list"
 set -euo pipefail
 
+# Disable any user-configured MCP servers so this example runs against the
+# bare SDK/CLI surface only.
+export COPILOT_DISABLE_MCP=1
+
 PROMPT="${1:-What is 2 + 2? Reply with only the digit.}"
 
 # `--allow-all-tools` (alias `--yolo`) auto-approves any tool the model wants
 # to invoke — drop it if you want interactive permission prompts.
-copilot -p "$PROMPT" --allow-all-tools
+# `--disable-builtin-mcps` ensures the CLI's bundled MCP servers stay off.
+copilot -p "$PROMPT" --allow-all-tools --disable-builtin-mcps

@@ -8,6 +8,10 @@
 import { readFile } from "node:fs/promises";
 import { CopilotClient } from "@github/copilot-sdk";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 const target = process.argv[2];
 if (!target) {
   console.error("usage: node examples/04-explain-code-file.mjs <file>");

@@ -22,6 +22,10 @@ import readline from "node:readline";
 import { Writable } from "node:stream";
 import { CopilotClient } from "@github/copilot-sdk";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 if (process.platform !== "darwin") {
   console.error("this example uses macOS Keychain (`security`); not portable.");
   process.exit(1);

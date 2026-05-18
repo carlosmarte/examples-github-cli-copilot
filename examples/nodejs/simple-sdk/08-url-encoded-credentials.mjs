@@ -15,6 +15,10 @@
 
 import { CopilotClient } from "@github/copilot-sdk";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 const { PROXY_USER, PROXY_PASS, PROXY_HOST, PROXY_PORT = "8080" } = process.env;
 if (!PROXY_USER || !PROXY_PASS || !PROXY_HOST) {
   console.error("set PROXY_USER, PROXY_PASS, PROXY_HOST (and optional PROXY_PORT)");

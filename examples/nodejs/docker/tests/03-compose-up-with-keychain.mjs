@@ -61,7 +61,8 @@ execFileSync("docker", ["compose", "up", "-d"], {
   cwd: COMPOSE_DIR,
   // Token reaches the copilot-cli container via the ${COPILOT_GITHUB_TOKEN}
   // interpolation in docker-compose.yml; never written to a file.
-  env: { ...process.env, COPILOT_GITHUB_TOKEN: token },
+  // COPILOT_DISABLE_MCP=1 keeps the example on the bare SDK/CLI surface.
+  env: { ...process.env, COPILOT_GITHUB_TOKEN: token, COPILOT_DISABLE_MCP: "1" },
   stdio: "inherit",
 });
 

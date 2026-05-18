@@ -34,8 +34,12 @@ public class Main {
         ProcessBuilder pb = new ProcessBuilder(
             "copilot",
             "-p", prompt,
-            "--allow-all-tools"
+            "--allow-all-tools",
+            "--disable-builtin-mcps"
         );
+        // Disable any user-configured MCP servers so this example runs against
+        // the bare SDK/CLI surface only.
+        pb.environment().put("COPILOT_DISABLE_MCP", "1");
         if (here != null && new File(here, "prompts/cleaner.md").exists()) {
             pb.directory(here);
         }

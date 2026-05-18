@@ -16,6 +16,10 @@ import (
 )
 
 func main() {
+	// Disable any user-configured MCP servers so this example runs against
+	// the bare SDK surface only.
+	os.Setenv("COPILOT_DISABLE_MCP", "1")
+
 	ctx := context.Background()
 
 	client := copilot.NewClient(&copilot.ClientOptions{})

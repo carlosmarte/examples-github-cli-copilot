@@ -3,9 +3,13 @@ version: "3.8"
 services:
   copilot-cli:
     image: ghcr.io/github/copilot-cli:latest
-    command: ["--headless", "--port", "4321"]
+    # `--disable-builtin-mcps` keeps the CLI's bundled MCP servers off so the
+    # container exposes the bare SDK surface only.
+    command: ["--headless", "--port", "4321", "--disable-builtin-mcps"]
     environment:
       - COPILOT_GITHUB_TOKEN=${COPILOT_GITHUB_TOKEN}
+      # Disable any user-configured MCP servers inside the container.
+      - COPILOT_DISABLE_MCP=1
     ports:
       - "4321:4321"
     restart: always
@@ -16,6 +20,7 @@ services:
     build: .
     environment:
       - CLI_URL=copilot-cli:4321
+      - COPILOT_DISABLE_MCP=1
     depends_on:
       - copilot-cli
     ports:

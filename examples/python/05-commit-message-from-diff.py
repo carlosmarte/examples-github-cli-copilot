@@ -6,12 +6,17 @@
 # Run: python 05-commit-message-from-diff.py
 
 import asyncio
+import os
 import subprocess
 import sys
 
 from copilot import CopilotClient
 from copilot.generated.session_events import AssistantMessageData
 from copilot.session import PermissionHandler
+
+# Disable any user-configured MCP servers so this example runs against the
+# bare SDK surface only.
+os.environ["COPILOT_DISABLE_MCP"] = "1"
 
 
 async def main() -> None:

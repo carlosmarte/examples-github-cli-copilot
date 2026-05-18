@@ -12,6 +12,10 @@
 
 import { CopilotClient } from "@github/copilot-sdk";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 const proxy = process.env.HTTPS_PROXY ?? process.env.HTTP_PROXY;
 if (!proxy) {
   console.error("HTTPS_PROXY (or HTTP_PROXY) is not set.");

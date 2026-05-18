@@ -9,6 +9,10 @@ use github_copilot_sdk::{Client, ClientOptions, SessionConfig};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Disable any user-configured MCP servers so this example runs against
+    // the bare SDK surface only.
+    unsafe { std::env::set_var("COPILOT_DISABLE_MCP", "1"); }
+
     let client = Client::start(ClientOptions::default()).await?;
 
     let mut config = SessionConfig::default();

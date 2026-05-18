@@ -10,6 +10,10 @@ use std::process::Command;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Disable any user-configured MCP servers so this example runs against
+    // the bare SDK surface only.
+    unsafe { std::env::set_var("COPILOT_DISABLE_MCP", "1"); }
+
     let output = Command::new("git").args(["diff", "--cached"]).output()?;
     if !output.status.success() {
         eprintln!("git diff --cached failed (exit {})", output.status);

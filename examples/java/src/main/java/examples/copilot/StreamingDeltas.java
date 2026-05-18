@@ -4,7 +4,13 @@
 // print chunks as they arrive. SessionIdleEvent fires when the response is
 // complete and the session is ready for the next prompt.
 //
-// Run: mvn -q exec:java -Dexec.mainClass=examples.copilot.StreamingDeltas
+// Run: COPILOT_DISABLE_MCP=1 mvn -q exec:java -Dexec.mainClass=examples.copilot.StreamingDeltas
+//
+// COPILOT_DISABLE_MCP=1 keeps this example on the bare SDK surface — no
+// user-configured MCP servers loaded by the underlying CLI subprocess. The
+// JVM cannot mutate its own environment, so the variable must be exported in
+// the parent shell. The setProperty mirror below is for any SDK code that
+// also consults JVM system properties.
 package examples.copilot;
 
 import com.github.copilot.sdk.CopilotClient;
@@ -20,6 +26,7 @@ import java.util.concurrent.CountDownLatch;
 
 public final class StreamingDeltas {
   public static void main(String[] args) throws Exception {
+    System.setProperty("copilot.disable.mcp", "1");
     try (CopilotClient client = new CopilotClient()) {
       client.start().get();
 

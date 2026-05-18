@@ -8,6 +8,10 @@
 import { execSync } from "node:child_process";
 import { CopilotClient } from "@github/copilot-sdk";
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+process.env.COPILOT_DISABLE_MCP = "1";
+
 const diff = execSync("git diff --cached", { encoding: "utf8" });
 if (!diff.trim()) {
   console.error("No staged changes. Run `git add` first.");

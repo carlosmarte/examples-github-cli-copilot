@@ -7,6 +7,10 @@
 
 using GitHub.Copilot.SDK;
 
+// Disable any user-configured MCP servers so this example runs against the
+// bare SDK surface only.
+Environment.SetEnvironmentVariable("COPILOT_DISABLE_MCP", "1");
+
 if (args.Length < 1 || string.IsNullOrEmpty(args[0]))
 {
     Console.Error.WriteLine("usage: dotnet run --project ExplainCodeFile -- <file>");
