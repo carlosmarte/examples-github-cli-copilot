@@ -1,0 +1,57 @@
+# Fastify — Copilot SDK example
+
+A Fastify server that processes incoming HTTP requests through
+`@github/copilot-sdk`. Each request opens a session against the running
+Copilot CLI, sends the prompt (default `"What is 2 + 2?"`), and returns the
+assistant's text as JSON.
+
+## Prerequisites
+
+- Node.js 20+
+- GitHub Copilot CLI 1.0.17+, authenticated (`copilot auth status`)
+
+## Install & run
+
+```sh
+npm install
+node server.mjs
+```
+
+## Try it
+
+```sh
+# Default prompt ("What is 2 + 2?")
+curl -s localhost:3000/ask
+
+# Custom prompt via JSON body
+curl -s -X POST localhost:3000/ask \
+  -H 'content-type: application/json' \
+  -d '{"prompt":"What is 2 + 2?"}'
+
+# Or via query string
+curl -s 'localhost:3000/ask?prompt=What+is+2+%2B+2%3F'
+```
+
+Response shape:
+
+```json
+{ "prompt": "What is 2 + 2?", "answer": "4" }
+```
+
+## Configuration
+
+| Env var          | Default   | Purpose                                |
+| ---------------- | --------- | -------------------------------------- |
+| `PORT`           | `3000`    | HTTP port to listen on                 |
+| `COPILOT_MODEL`  | `gpt-4.1` | Model passed to `client.createSession` |
+
+## Notes
+
+- A single `CopilotClient` is shared across requests; each request gets its
+  own session.
+- `app.close()` then `client.stop()` run on `SIGINT`/`SIGTERM` so neither the
+  HTTP server nor the CLI subprocess is leaked. Mirrors
+  `../simple-sdk/06-graceful-shutdown.mjs`.
+- The assistant text comes from `response.data.content` — same extraction
+  pattern as `../simple-sdk/01-hello-world.mjs`.
+- The sibling `../express/` example is the same flow on Express.

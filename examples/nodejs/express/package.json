@@ -1,0 +1,14 @@
+{
+  "name": "copilot-sdk-express-example",
+  "version": "0.1.0",
+  "description": "ExpressJS server that proxies requests through @github/copilot-sdk.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@github/copilot-sdk": "^0.1.0",
+    "express": "^4.19.2"
+  }
+}
